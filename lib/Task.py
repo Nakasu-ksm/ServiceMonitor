@@ -5,7 +5,7 @@ from lib.check import Manager
 class Task(Thread):
     def __init__(self):
 
-        Manager.get_module()[0]['m']()
+        # Manager.get_module()[0]['m']()
         self.run()
     def _templete(self, func,pid):
 
