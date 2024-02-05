@@ -2,14 +2,16 @@ import functools
 from functools import wraps
 import config.config as cf
 
+
 class Manager():
     @staticmethod
     def _init():
         global _State
         _State = []
+
     @staticmethod
     def set_module(config, module):
-        _State.append({"c": config, "m": module,'t':0})
+        _State.append({"c": config, "m": module, 't': 0})
 
     @staticmethod
     def add_time(id):
@@ -25,16 +27,18 @@ class Manager():
             return True
         return False
 
+
+    @staticmethod
+    def set_status(pid:int,status:int):
+        _State[pid]['c']['status'] = status
+
     @staticmethod
     def get_func(id):
         return _State[id]['m']
 
-
     @staticmethod
     def get_module():
         return _State
-
-
 
 
 class Check:
@@ -48,31 +52,36 @@ class Check:
             if item['id'] == id:
                 return k, item
 
-    def run(self, name,task_time=None):
+    def run(self, name, task_time=None):
         def decorate(func):
+            # decorate.__func = func
+            # print(func.__code__)
+
             dic = dict()
             dic['name'] = name
             if not task_time:
                 dic['task_time'] = cf.default_task_time
             else:
                 dic['task_time'] = task_time
-            Manager.set_module(dic, func)
+            dic['status'] = 0
+            # print(func.__name__)
+            Manager.set_module(dic,func)
+            # print(str(func)+"测试")
             # index, item = self.get_item(id)
             # self.config[index]['status'] = 0
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
-                print("测试")
-                try:
-                    rs = func(*args, **kwargs)
-                except:
-                    print(func.__name__+"任务执行出错")
-                    rs = None
-
-                if not rs:
-                    index, item = self.get_item(id)
-                    self.config[index]['status'] = 1
+                # print("测一下试")
+                # try:
+                #     rs = func(*args, **kwargs)
+                # except:
+                #     print(func.__name__ + "任务执行出错")
+                #     rs = None
+                #
+                # if not rs:
+                #     index, item = self.get_item(id)
+                #     self.config[index]['status'] = 1
                 return
 
             return wrapper
-
         return decorate

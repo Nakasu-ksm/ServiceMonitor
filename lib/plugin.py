@@ -15,18 +15,3 @@ class Plugin():
             module = importlib.import_module(path_to_module_name(path))
             self.manager.append(module)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-print("ces")
-

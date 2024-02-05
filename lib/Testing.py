@@ -5,5 +5,5 @@ from lib.check import *
 class Testing():
     def __init__(self):
         plugin = Plugin()
-        Manager.get_module()
+        # Manager.get_module()
         task = Task()
