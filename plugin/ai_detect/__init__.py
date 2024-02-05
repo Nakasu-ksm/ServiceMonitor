@@ -11,7 +11,4 @@ def _():
 
 @check.run(name="测试方法")
 def ces():
-    # print("测试")
-    # a = "cc"
-    # a['3']
     return True

@@ -8,10 +8,14 @@ class Task(Thread):
         Manager.get_module()[0]['m']()
         self.run()
     def _templete(self, func,pid):
-        result = func()
-        if result:
-            return Manager.set_status(pid, 0)
-        return Manager.set_status(pid,1)
+
+        try:
+            result = func()
+            if result:
+                return Manager.set_status(pid, 0)
+            return Manager.set_status(pid, 1)
+        except(Exception):
+            print(func.__module__+":"+func.__name__+":方法执行异常")
 
 
     def _task(self):
@@ -21,8 +25,6 @@ class Task(Thread):
                 Manager.add_time(pid)
                 if Manager.equal_time(pid):
                     Thread(target=self._templete(Manager.get_func(pid),pid)).start()
-                    # Manager.get_func(pid)()
-                    # print(Manager.get_func(pid))
                     Manager.clear_time(pid)
             time.sleep(1)
 
