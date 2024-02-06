@@ -1,9 +1,10 @@
 from lib.plugin import Plugin
-from lib.Task import *
-from lib.check import *
+from lib.Task import Task
 
-class Testing():
+
+class Testing:
     def __init__(self):
         plugin = Plugin()
         # Manager.get_module()
         task = Task()
+        task.start()

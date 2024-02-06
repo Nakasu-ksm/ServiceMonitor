@@ -1,14 +1,19 @@
-from lib.check import *
+from datetime import datetime
 
-check = Check()
-test = []
+from service_checker import Checker
+
+checker = Checker()
+# test = []
 
 
-@check.run(name="测试服务器")
-def _():
+@checker.register(5)
+async def _():
+    """5s一次"""
+    print(f"5s一次 {datetime.now()}")
     return False
 
 
-@check.run(name="测试方法")
-def ces():
+@checker.register(2)
+async def _():
+    print(f"2s一次 {datetime.now()}")
     return True

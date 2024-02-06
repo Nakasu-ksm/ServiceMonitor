@@ -1,6 +1,21 @@
 import httpx
-from lib.Testing import Testing
 from fastapi import FastAPI
-app = FastAPI()
-client = httpx.Client(timeout=20)
-testing_app = Testing()
+
+# from lib.Testing import Testing
+#
+# app = FastAPI()
+# client = httpx.AsyncClient(timeout=20)
+# testing_app = Testing()
+import asyncio
+from service_checker import Checker, Plugin
+
+async def main():
+    plugin = Plugin()
+    plugin.load_module()
+
+    checker = Checker()
+    checker.run()
+    await asyncio.get_running_loop().create_future()
+
+if __name__ == "__main__":
+    asyncio.run(main())

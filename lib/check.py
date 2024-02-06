@@ -1,17 +1,20 @@
 import functools
 from functools import wraps
+from typing import Any, Dict, List
+
 import config.config as cf
 
+_State: List[Dict[str, Any]] = []
 
-class Manager():
+
+class Manager:
     @staticmethod
     def _init():
         global _State
-        _State = []
 
     @staticmethod
-    def set_module(config, module):
-        _State.append({"c": config, "m": module, 't': 0})
+    def set_module(config, func):
+        _State.append({"c": config, "m": func, "t": 0})
 
     @staticmethod
     def add_time(id):
@@ -19,22 +22,21 @@ class Manager():
 
     @staticmethod
     def clear_time(id):
-        _State[id]['t'] = 0
+        _State[id]["t"] = 0
 
     @staticmethod
     def equal_time(id):
-        if _State[id]['t'] >= _State[id]['c']['task_time']:
+        if _State[id]["t"] >= _State[id]["c"]["task_time"]:
             return True
         return False
 
-
     @staticmethod
-    def set_status(pid:int,status:int):
-        _State[pid]['c']['status'] = status
+    def set_status(pid: int, status: int):
+        _State[pid]["c"]["status"] = status
 
     @staticmethod
     def get_func(id):
-        return _State[id]['m']
+        return _State[id]["m"]
 
     @staticmethod
     def get_module():
@@ -49,7 +51,7 @@ class Check:
 
     def get_item(self, id):
         for k, item in enumerate(self.config):
-            if item['id'] == id:
+            if item["id"] == id:
                 return k, item
 
     def run(self, name, task_time=None):
@@ -57,15 +59,16 @@ class Check:
             # decorate.__func = func
             # print(func.__code__)
 
-            dic = dict()
-            dic['name'] = name
-            if not task_time:
-                dic['task_time'] = cf.default_task_time
+            config = {}
+            config["name"] = name
+            if task_time is None:
+                config["task_time"] = cf.default_task_time
             else:
-                dic['task_time'] = task_time
-            dic['status'] = 0
+                config["task_time"] = task_time
+            config["status"] = 0
             # print(func.__name__)
-            Manager.set_module(dic,func)
+            Manager.set_module(config, func)
+
             # print(str(func)+"测试")
             # index, item = self.get_item(id)
             # self.config[index]['status'] = 0
@@ -84,4 +87,5 @@ class Check:
                 return
 
             return wrapper
+
         return decorate

@@ -1,8 +1,7 @@
+# -*- coding: utf-8 -*-
 import glob
 import importlib
 import os
-
-from lib.check import *
 
 
 def path_to_module_name(path):
@@ -13,7 +12,6 @@ def path_to_module_name(path):
 class Plugin:
     def __init__(self):
         self.modules = []
-        Manager._init()
         self.load_module()
 
     def load_module(self):
