@@ -9,7 +9,6 @@ checker = Checker()
 async def _():
     """5s一次"""
     print(f"5s一次 {datetime.now()}")
-    return "2"[2]
     return True
 
 

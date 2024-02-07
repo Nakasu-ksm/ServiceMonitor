@@ -9,7 +9,6 @@ from contextvars import copy_context
 from functools import partial, wraps
 from typing import Any, Awaitable, Callable, Coroutine, List, Union, Dict, Optional
 import inspect
-
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from service_checker.utils import SingletonType
