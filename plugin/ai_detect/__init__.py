@@ -6,14 +6,14 @@ checker = Checker()
 # test = []
 
 
-@checker.register(5)
+@checker.register("5s",5)
 async def _():
     """5s一次"""
     print(f"5s一次 {datetime.now()}")
     return False
 
 
-@checker.register(2)
+@checker.register("10s",2)
 async def _():
     print(f"2s一次 {datetime.now()}")
     return True

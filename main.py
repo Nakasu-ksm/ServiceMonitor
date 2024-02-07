@@ -1,13 +1,23 @@
 import httpx
 from fastapi import FastAPI
 
+from hypercorn.config import Config
+from hypercorn.asyncio import serve
+
 # from lib.Testing import Testing
 #
-# app = FastAPI()
+app = FastAPI()
 # client = httpx.AsyncClient(timeout=20)
 # testing_app = Testing()
 import asyncio
 from service_checker import Checker, Plugin
+
+
+@app.get("/status")
+async def _():
+    checker = Checker()
+    return list(map(lambda x: x.__task_name__, checker.funcs))
+
 
 async def main():
     plugin = Plugin()
@@ -15,7 +25,9 @@ async def main():
 
     checker = Checker()
     checker.run()
-    await asyncio.get_running_loop().create_future()
+    config = Config.from_mapping({"bind": "0.0.0.0:8000"})
+    await serve(app, config)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

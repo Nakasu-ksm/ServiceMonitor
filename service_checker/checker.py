@@ -41,8 +41,9 @@ class Checker(metaclass=SingletonType):
         self.funcs: List[Runner_T] = []
         self.scheduler = AsyncIOScheduler()
 
-    def register(self, task_time: float = 5.0) -> Callable[[Runner_T], Runner_T]:
+    def register(self, name: str, task_time: float = 5.0) -> Callable[[Runner_T], Runner_T]:
         def inner(func: Runner_T) -> Runner_T:
+            func.__task_name__ = name
             self.funcs.append(func)
             if not asyncio.iscoroutinefunction(func):
                 func_ = run_sync(func)
