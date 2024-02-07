@@ -5,7 +5,6 @@ from service_checker import Checker
 checker = Checker()
 # test = []
 
-
 @checker.register(task_time=5, service_name="服务器1")
 async def _():
     """5s一次"""
@@ -18,3 +17,4 @@ async def _():
 async def _():
     print(f"2s一次 {datetime.now()}")
     return False
+
