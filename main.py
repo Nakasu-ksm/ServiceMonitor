@@ -1,6 +1,5 @@
 import httpx
 from fastapi import FastAPI
-
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
@@ -16,7 +15,7 @@ from service_checker import Checker, Plugin
 @app.get("/status")
 async def _():
     checker = Checker()
-    return list(map(lambda x: x.__task_name__, checker.funcs))
+    return "test"
 
 
 async def main():
