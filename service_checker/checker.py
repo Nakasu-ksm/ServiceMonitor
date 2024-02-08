@@ -42,7 +42,7 @@ class Checker(metaclass=SingletonType):
         self.data: List[Dict[...]] = []
 
     async def _template(self, func, index):
-        print(inspect.iscoroutinefunction(func))
+        # print(inspect.iscoroutinefunction(func))
         try:
             if inspect.iscoroutinefunction(func):
                 result = await func()
@@ -59,7 +59,7 @@ class Checker(metaclass=SingletonType):
 
     def register(self, task_time: float = 5.0, service_name: str = Optional[str]) -> Callable[[Runner_T], Runner_T]:
         def inner(func: Runner_T) -> Runner_T:
-            print(inspect.signature(func))
+            # print(inspect.signature(func))
             self.data.append({'status': 0, "service_name": service_name})
             index = len(self.data)-1
             self.funcs.append(func)
