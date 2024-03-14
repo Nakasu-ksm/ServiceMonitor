@@ -15,6 +15,7 @@ class Plugin:
         self.load_module()
 
     def load_module(self):
+
         for path in glob.glob("plugin/*"):
             module = importlib.import_module(path_to_module_name(path))
             self.modules.append(module)

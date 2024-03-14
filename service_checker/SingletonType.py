@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import threading
 
-
 class SingletonType(type):
     _instance_lock = threading.Lock()
 
@@ -10,3 +9,5 @@ class SingletonType(type):
             with cls._instance_lock:  # 加锁
                 cls._instance = super().__call__(*args, **kwargs)
         return cls._instance
+
+

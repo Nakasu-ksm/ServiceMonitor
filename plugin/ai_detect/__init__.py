@@ -1,19 +1,17 @@
 from datetime import datetime
-
 from service_checker import Checker
+from service_checker.utils.helper import Helper
 
 checker = Checker()
 # test = []
 
 @checker.register(task_time=5, service_name="服务器1")
-async def _():
-    """5s一次"""
-    print(f"5s一次 {datetime.now()}")
-    return True
+def _(helper : Helper):
+    return helper.test_website("https://baidu.com")
 
 
-@checker.register(task_time=2, service_name="服务器2")
-async def _():
-    print(f"2s一次 {datetime.now()}")
-    return False
+# @checker.register(task_time=2, service_name="服务器2")
+# async def _():
+#     print(f"2s一次 {datetime.now()}")
+#     return False
 

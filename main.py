@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
+from service_checker.utils.utils import Core
+
 # from lib.Testing import Testing
 #
 app = FastAPI()
@@ -14,8 +16,7 @@ from service_checker import Checker, Plugin
 
 @app.get("/status")
 async def _():
-    checker = Checker()
-    return "test"
+    return Core().get_status()
 
 
 async def main():
