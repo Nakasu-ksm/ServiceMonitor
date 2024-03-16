@@ -7,7 +7,7 @@ checker = Checker()
 
 @checker.register(task_time=5, service_name="服务器1")
 def _(helper : Helper):
-    return helper.test_website("https://baidu.com")
+    return helper.get_result("https://cbaisdasadu.com")
 
 
 # @checker.register(task_time=2, service_name="服务器2")
